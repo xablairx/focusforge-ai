@@ -57,7 +57,7 @@ export default function NewMissionPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: title.trim() }),
     })
-    if (res.ok) router.push('/app/checkin')
+    if (res.ok) router.push('/checkin')
     else setLoading(false)
   }
 
@@ -87,7 +87,7 @@ export default function NewMissionPage() {
           />
           <div className="space-y-2">
             <button
-              onClick={() => router.push('/app')}
+              onClick={() => router.push('/')}
               className="w-full bg-[#f97316] text-white font-black uppercase tracking-wide py-3 rounded-xl text-sm"
             >
               You&apos;re right — I&apos;ll continue my mission

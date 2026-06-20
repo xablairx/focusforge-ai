@@ -18,7 +18,7 @@ export default async function TopNav() {
             SAHM
           </span>
         )}
-        <a href="/app/settings" className="w-8 h-8 bg-[#222] rounded-lg flex items-center justify-center text-sm">⚙️</a>
+        <a href="/settings" className="w-8 h-8 bg-[#222] rounded-lg flex items-center justify-center text-sm">⚙️</a>
       </div>
     </header>
   )

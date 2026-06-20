@@ -37,7 +37,7 @@ export default function CheckinPage() {
       return
     }
 
-    router.push('/app')
+    router.push('/')
   }
 
   return (

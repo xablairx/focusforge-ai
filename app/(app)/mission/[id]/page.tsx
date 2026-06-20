@@ -28,7 +28,7 @@ export default async function MissionDetailPage({ params }: { params: Promise<{ 
   return (
     <div>
       <div className="bg-black px-4 pt-4 pb-5 border-b-4 border-[#f97316]">
-        <Link href="/app/missions" className="text-gray-500 text-xs">← Missions</Link>
+        <Link href="/missions" className="text-gray-500 text-xs">← Missions</Link>
         <h1 className="text-xl font-black text-white mt-2 leading-tight">{m.title}</h1>
         <div className="flex gap-2 mt-2">
           <span className="text-[10px] text-gray-400 capitalize">Status: {m.status}</span>

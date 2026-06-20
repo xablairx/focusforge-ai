@@ -23,7 +23,7 @@ export default async function DashboardPage() {
       supabase.from('revenue_entries').select('amount').eq('user_id', user.id).gte('entry_date', new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0]),
     ])
 
-  if (!mission) redirect('/app/mission/new')
+  if (!mission) redirect('/mission/new')
 
   const totalRevenue = (revenue ?? []).reduce((sum: number, r: { amount: number }) => sum + r.amount, 0)
   const completedCount = (tasks ?? []).filter((t: { status: string }) => t.status === 'completed').length

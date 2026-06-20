@@ -15,7 +15,7 @@ export default function TaskList({ initialTasks }: { initialTasks: Task[] }) {
     return (
       <div className="px-4 pt-6 text-center">
         <p className="text-gray-400 text-sm">No tasks yet.</p>
-        <a href="/app/checkin" className="inline-block mt-2 bg-[#f97316] text-white font-black text-xs uppercase px-4 py-2 rounded-lg">
+        <a href="/checkin" className="inline-block mt-2 bg-[#f97316] text-white font-black text-xs uppercase px-4 py-2 rounded-lg">
           Start Check-in →
         </a>
       </div>

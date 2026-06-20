@@ -53,7 +53,7 @@ export default function ReviewPage() {
           </button>
           <div className="mt-6">
             <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Past Reviews</p>
-            <Link href="/app/missions" className="text-[#f97316] text-sm font-bold">View Mission History →</Link>
+            <Link href="/missions" className="text-[#f97316] text-sm font-bold">View Mission History →</Link>
           </div>
         </div>
       )}

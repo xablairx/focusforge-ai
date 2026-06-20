@@ -36,7 +36,7 @@ export default function OnboardingPage() {
 
     await supabase.from('streaks').insert({ user_id: user.id })
 
-    router.push('/app/checkin')
+    router.push('/checkin')
   }
 
   const stepNum = step === 'name' ? 1 : step === 'mission' ? 2 : 3

@@ -35,7 +35,7 @@ export default async function MissionsPage() {
         {(missions ?? []).map((m: Mission) => (
           <Link
             key={m.id}
-            href={`/app/mission/${m.id}`}
+            href={`/mission/${m.id}`}
             className="block border border-gray-100 rounded-xl p-3.5 mb-2"
           >
             <div className="flex items-start justify-between gap-2">
@@ -50,7 +50,7 @@ export default async function MissionsPage() {
         {(missions ?? []).every((m: Mission) => m.status !== 'active') && (
           <div className="mt-4 text-center">
             <Link
-              href="/app/mission/new"
+              href="/mission/new"
               className="inline-block bg-[#f97316] text-white font-black uppercase text-xs px-5 py-3 rounded-xl"
             >
               Start New Mission →

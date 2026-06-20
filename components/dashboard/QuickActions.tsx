@@ -4,9 +4,9 @@ export default function QuickActions() {
   return (
     <div className="grid grid-cols-3 gap-3 px-4 pb-4">
       {[
-        { href: '/app/ideas',   icon: '💡', label: 'Jail Idea'   },
-        { href: '/app/revenue', icon: '💰', label: 'Log Revenue' },
-        { href: '/app/chat',    icon: '💬', label: 'AI Chat'     },
+        { href: '/ideas',   icon: '💡', label: 'Jail Idea'   },
+        { href: '/revenue', icon: '💰', label: 'Log Revenue' },
+        { href: '/chat',    icon: '💬', label: 'AI Chat'     },
       ].map(({ href, icon, label }) => (
         <Link
           key={href}
