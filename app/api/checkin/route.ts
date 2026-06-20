@@ -49,8 +49,10 @@ export async function POST(request: Request) {
   let parsed
   try {
     parsed = TaskOutputSchema.parse(JSON.parse(extractJson(raw)))
-  } catch {
-    return NextResponse.json({ error: 'AI returned invalid response' }, { status: 500 })
+  } catch (err) {
+    console.error('Checkin parse error:', err)
+    console.error('Raw Claude response:', raw)
+    return NextResponse.json({ error: 'AI returned invalid response', debug: raw.slice(0, 500) }, { status: 500 })
   }
 
   const { data: checkin } = await supabase
