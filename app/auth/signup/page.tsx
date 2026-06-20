@@ -18,7 +18,7 @@ export default function SignupPage() {
     const supabase = createClient()
     const { error } = await supabase.auth.signUp({ email, password })
     if (error) { setError(error.message); setLoading(false); return }
-    router.push('/app/onboarding')
+    router.push('/onboarding')
   }
 
   return (
