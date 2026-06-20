@@ -41,7 +41,7 @@ export async function POST() {
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 768,
-    system: `Generate a weekly review for an entrepreneur. Be direct, specific, and actionable. Return JSON only.`,
+    system: `Generate a weekly review for an entrepreneur. Be direct, specific, and actionable. Respond with ONLY a valid JSON object — no markdown, no code blocks, no explanation.`,
     messages: [{
       role: 'user',
       content: `Mission: "${mission.title}"
@@ -51,7 +51,8 @@ Hours worked: ${hoursSpent}
 Tasks completed: ${completedTasks.length}/${tasks?.length ?? 0}
 Revenue: $${totalRevenue}
 
-Return JSON: { "wins": ["..."], "failures": ["..."], "coaching": "direct 2-3 sentence coaching note", "focus_score": 0-100, "completion_score": 0-100 }`,
+Respond with ONLY this JSON (no markdown, no backticks):
+{ "wins": ["<win 1>", "<win 2>"], "failures": ["<miss 1>"], "coaching": "<direct 2-3 sentence coaching note>", "focus_score": <integer 0-100>, "completion_score": <integer 0-100> }`,
     }],
   })
 

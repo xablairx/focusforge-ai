@@ -26,16 +26,17 @@ export async function POST(request: Request) {
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 512,
-    system: `You evaluate whether a new idea supports a user's current mission. Be honest and direct. Return JSON only.`,
+    system: `You evaluate whether a new idea supports a user's current mission. Be honest and direct. Respond with ONLY a valid JSON object — no markdown, no code blocks, no explanation.`,
     messages: [{
       role: 'user',
       content: `Current mission: "${mission.title}" (Day ${days})
 New idea: "${body.title}"
 ${body.description ? `Details: ${body.description}` : ''}
 
-Does this idea directly support the current mission?
-Return JSON: { "alignment_score": 0-10, "status": "jailed"|"flagged"|"approved", "ai_notes": "1-2 sentence honest assessment" }
-Score guide: 0-4=jailed, 5-7=flagged, 8-10=approved`,
+Does this idea directly support the current mission? Score 0-4=jailed, 5-7=flagged, 8-10=approved.
+
+Respond with ONLY this JSON (no markdown, no backticks):
+{ "alignment_score": <integer 0-10>, "status": "<jailed|flagged|approved>", "ai_notes": "<1-2 sentence honest assessment>" }`,
     }],
   })
 

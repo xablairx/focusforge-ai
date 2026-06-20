@@ -7,12 +7,24 @@ MISSION: "${mission.title}" (Day ${Math.floor((Date.now() - new Date(mission.sta
 SAHM MODE: ${profile.sahm_mode ? `YES — max ${profile.sahm_available_minutes} minutes available` : 'NO'}
 
 TASK GENERATION RULES:
-- Revenue score 8-10: direct client outreach, sales calls, proposals, follow-ups
-- Revenue score 4-7: portfolio, content, lead magnets supporting the mission
-- Revenue score 1-3: admin, learning, preparation
-- ${profile.sahm_mode ? 'SAHM MODE: Return EXACTLY 1 task (primary only). The single highest revenue-score action completable in the time window.' : 'Return 1 primary task (score 8-10), up to 2 secondary tasks (score 4-7). Maximum 3 tasks total.'}
-- coaching_note: 1-2 sentences, direct, specific to this user's situation. No fluff.
-- Return JSON only matching the schema.`
+- revenue_score 8-10: direct client outreach, sales calls, proposals, follow-ups
+- revenue_score 4-7: portfolio, content, lead magnets supporting the mission
+- revenue_score 1-3: admin, learning, preparation
+- ${profile.sahm_mode ? 'SAHM MODE: Return EXACTLY 1 task with priority "primary". The single highest revenue-score action completable in the time window.' : 'Return 1 task with priority "primary" (revenue_score 8-10), and up to 2 tasks with priority "secondary" (revenue_score 4-7). Maximum 3 tasks total.'}
+- coaching_note: 1-2 sentences, direct, specific. No fluff.
+
+YOU MUST respond with ONLY a valid JSON object — no markdown, no code blocks, no explanation. Exact format:
+{
+  "tasks": [
+    {
+      "title": "short action-oriented task title",
+      "description": "one sentence on how to do it",
+      "priority": "primary",
+      "revenue_score": 9
+    }
+  ],
+  "coaching_note": "direct 1-2 sentence coaching note"
+}`
 }
 
 export function buildCheckinUserPrompt(opts: {
