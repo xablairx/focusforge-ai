@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { resend } from '@/lib/resend/client'
+import { getResend } from '@/lib/resend/client'
 import { weeklyReviewEmailHtml } from '@/lib/resend/templates'
 
 interface ReviewResult {
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         const { data: mission } = await supabase
           .from('missions').select('title').eq('user_id', p.id).eq('status', 'active').single()
 
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'FocusForge AI <noreply@focusforge.ai>',
           to: user.email,
           subject: `Your week in review — ${data.review.week_start}`,
