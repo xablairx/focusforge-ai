@@ -24,22 +24,25 @@ export default function ChatInput({ onSend, disabled }: Props) {
   }
 
   return (
-    <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-100 px-4 py-3 flex gap-3 items-end">
+    <div className="fixed bottom-16 left-0 right-0 bg-[#0a0a0a] border-t border-[#1a1a1a] px-4 py-3 flex gap-2.5 items-end">
       <textarea
         ref={textareaRef}
         value={text}
         onChange={e => setText(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Talk to your Chief of Staff..."
+        placeholder="Ask your Chief of Staff..."
         rows={1}
-        className="flex-1 resize-none border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#f97316] max-h-24"
+        disabled={disabled}
+        className="flex-1 resize-none bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#f97316] max-h-24 disabled:opacity-50"
       />
       <button
         onClick={handleSend}
         disabled={!text.trim() || disabled}
-        className="w-10 h-10 bg-[#f97316] rounded-xl flex items-center justify-center disabled:opacity-40"
+        className="w-10 h-10 bg-[#f97316] rounded-xl flex items-center justify-center disabled:opacity-30 flex-shrink-0"
       >
-        <span className="text-white font-black text-lg">↑</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+        </svg>
       </button>
     </div>
   )

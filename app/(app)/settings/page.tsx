@@ -60,59 +60,78 @@ export default function SettingsPage() {
     }
   }
 
-  if (!profile) return <div className="min-h-screen bg-white flex items-center justify-center"><p className="text-gray-400 text-sm">Loading...</p></div>
+  if (!profile) return (
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="w-5 h-5 border-2 border-[#222] border-t-[#f97316] rounded-full animate-spin" />
+    </div>
+  )
 
   return (
-    <div>
-      <div className="bg-black px-4 pt-4 pb-5 border-b-4 border-[#f97316]">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-4 pt-6 pb-5 border-b border-[#1a1a1a]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">Account</p>
         <h1 className="text-2xl font-black text-white">Settings</h1>
       </div>
 
       {streak && (
-        <div className="mx-4 mt-4 bg-black rounded-xl p-3.5 flex items-center gap-3">
-          <div className="text-3xl font-black text-[#f97316]">{streak.current_streak}</div>
+        <div className="mx-4 mt-5 border border-[#1e1e1e] bg-[#111] rounded-xl p-4 flex items-center gap-4">
           <div>
-            <p className="text-white text-sm font-bold">day streak 🔥</p>
-            <p className="text-gray-400 text-xs">Best: {streak.longest_streak} days</p>
+            <p className="text-4xl font-black text-[#f97316] tabular-nums leading-none">{streak.current_streak}</p>
+          </div>
+          <div>
+            <p className="text-white font-bold text-sm">day streak 🔥</p>
+            <p className="text-[#525252] text-xs mt-0.5">Best: {streak.longest_streak} days</p>
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSave} className="px-4 pt-5 space-y-4">
+      <form onSubmit={handleSave} className="px-4 pt-5 space-y-5">
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block mb-1.5">Name</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">Name</label>
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#f97316]"
+            className="w-full bg-[#111] border border-[#222] text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#f97316]"
           />
         </div>
 
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block mb-1.5">SAHM Mode</label>
-          <div className="space-y-2">
-            {[{ label: 'Off — Standard (up to 3 tasks)', value: false }, { label: 'On — One task, time-capped', value: true }].map(opt => (
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">Mode</label>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: 'Standard', sub: 'Up to 3 tasks', value: false },
+              { label: 'SAHM', sub: 'One task, timed', value: true },
+            ].map(opt => (
               <button
                 key={String(opt.value)}
                 type="button"
                 onClick={() => setSahmMode(opt.value)}
-                className={`w-full border-2 rounded-xl p-3 text-left text-xs font-semibold ${sahmMode === opt.value ? 'border-[#f97316] bg-orange-50' : 'border-gray-200'}`}
+                className={`border rounded-xl p-3 text-left transition-all ${
+                  sahmMode === opt.value
+                    ? 'border-[#f97316] bg-[#f97316]/5'
+                    : 'border-[#222] bg-[#111]'
+                }`}
               >
-                {opt.label}
+                <p className={`text-xs font-bold ${sahmMode === opt.value ? 'text-[#f97316]' : 'text-white'}`}>{opt.label}</p>
+                <p className="text-[10px] text-[#525252] mt-0.5">{opt.sub}</p>
               </button>
             ))}
           </div>
           {sahmMode && (
-            <div className="mt-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block mb-1.5">Default available time</label>
+            <div className="mt-3">
+              <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">Default time</label>
               <div className="flex gap-2">
-                {[15,30,45,60].map(m => (
+                {[15, 30, 45, 60].map(m => (
                   <button
                     key={m}
                     type="button"
                     onClick={() => setSahmMinutes(m)}
-                    className={`flex-1 py-2 rounded-lg text-xs font-bold border ${sahmMinutes === m ? 'border-[#f97316] bg-[#f97316] text-white' : 'border-gray-200 text-gray-600'}`}
+                    className={`flex-1 py-2 rounded-lg text-xs font-bold border transition-all ${
+                      sahmMinutes === m
+                        ? 'border-[#f97316] bg-[#f97316] text-white'
+                        : 'border-[#222] bg-[#111] text-[#a1a1aa]'
+                    }`}
                   >
                     {m}m
                   </button>
@@ -123,25 +142,25 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block mb-1.5">
-            Update Mission Progress
-          </label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">Mission Progress</label>
           <MissionProgressSlider onSave={handleMissionProgress} />
         </div>
 
         <button
           type="submit"
           disabled={saving}
-          className={`w-full py-3 rounded-xl font-black text-sm uppercase tracking-wide ${saved ? 'bg-green-600 text-white' : 'bg-black text-white'} disabled:opacity-50`}
+          className={`w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-widest transition-all disabled:opacity-50 ${
+            saved ? 'bg-[#22c55e] text-white' : 'bg-white text-black'
+          }`}
         >
           {saved ? '✓ Saved' : saving ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
 
-      <div className="px-4 pt-4 pb-6">
+      <div className="px-4 pt-4 pb-8">
         <button
           onClick={handleSignOut}
-          className="w-full border border-gray-200 text-gray-400 font-bold py-3 rounded-xl text-sm"
+          className="w-full border border-[#222] text-[#525252] font-semibold py-3.5 rounded-xl text-sm hover:text-white hover:border-[#333] transition-all"
         >
           Sign Out
         </button>
@@ -161,24 +180,24 @@ function MissionProgressSlider({ onSave }: { onSave: (pct: number) => void }) {
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-3">
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={pct}
-          onChange={e => setPct(Number(e.target.value))}
-          className="flex-1 accent-[#f97316]"
-        />
-        <span className="text-sm font-black w-10 text-right">{pct}%</span>
-      </div>
+    <div className="flex items-center gap-3">
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={pct}
+        onChange={e => setPct(Number(e.target.value))}
+        className="flex-1"
+      />
+      <span className="text-sm font-black text-white tabular-nums w-10 text-right">{pct}%</span>
       <button
         type="button"
         onClick={handleSave}
-        className={`mt-2 text-xs font-bold px-3 py-1.5 rounded-lg ${saved ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}
+        className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all ${
+          saved ? 'border-[#22c55e]/30 text-[#22c55e] bg-[#22c55e]/5' : 'border-[#222] text-[#525252] hover:text-white'
+        }`}
       >
-        {saved ? '✓ Updated' : 'Update progress'}
+        {saved ? '✓' : 'Set'}
       </button>
     </div>
   )

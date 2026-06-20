@@ -26,51 +26,57 @@ export default async function MissionDetailPage({ params }: { params: Promise<{ 
   const completedTasks = (tasks ?? []).filter((t: { status: string }) => t.status === 'completed').length
 
   return (
-    <div>
-      <div className="bg-black px-4 pt-4 pb-5 border-b-4 border-[#f97316]">
-        <Link href="/missions" className="text-gray-500 text-xs">← Missions</Link>
-        <h1 className="text-xl font-black text-white mt-2 leading-tight">{m.title}</h1>
-        <div className="flex gap-2 mt-2">
-          <span className="text-[10px] text-gray-400 capitalize">Status: {m.status}</span>
-          <span className="text-[10px] text-gray-400">{m.completion_pct}% complete</span>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-4 pt-6 pb-5 border-b border-[#1a1a1a]">
+        <Link href="/missions" className="text-[10px] font-bold uppercase tracking-widest text-[#525252] hover:text-white transition-colors">
+          ← Missions
+        </Link>
+        <h1 className="text-xl font-black text-white mt-3 leading-tight">{m.title}</h1>
+        <div className="flex items-center gap-3 mt-2">
+          <span className="text-[10px] text-[#525252] capitalize">{m.status}</span>
+          <span className="text-[#333]">·</span>
+          <span className="text-[10px] text-[#525252] tabular-nums">{m.completion_pct}% complete</span>
         </div>
       </div>
 
-      <div className="px-4 pt-4 grid grid-cols-2 gap-3">
-        <div className="bg-gray-50 rounded-xl p-3">
-          <p className="text-xs text-gray-400">Started</p>
-          <p className="font-bold text-sm">{fmt(m.started_at)}</p>
-        </div>
-        <div className="bg-gray-50 rounded-xl p-3">
-          <p className="text-xs text-gray-400">{m.status === 'completed' ? 'Completed' : 'Last updated'}</p>
-          <p className="font-bold text-sm">{fmt(m.completed_at ?? m.abandoned_at ?? m.started_at)}</p>
-        </div>
+      <div className="grid grid-cols-2 gap-px bg-[#1a1a1a] border-b border-[#1a1a1a]">
+        {[
+          { label: 'Started', value: fmt(m.started_at) },
+          { label: m.status === 'completed' ? 'Completed' : 'Ended', value: fmt(m.completed_at ?? m.abandoned_at ?? null) },
+        ].map(({ label, value }) => (
+          <div key={label} className="bg-[#0a0a0a] px-4 py-4">
+            <p className="text-[9px] font-semibold uppercase tracking-widest text-[#525252]">{label}</p>
+            <p className="text-sm font-bold text-white mt-1">{value}</p>
+          </div>
+        ))}
       </div>
 
       {tasks && tasks.length > 0 && (
-        <div className="px-4 pt-4">
-          <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
-            Tasks ({completedTasks}/{tasks.length} completed)
+        <div className="px-4 pt-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">
+            Tasks <span className="tabular-nums">({completedTasks}/{tasks.length})</span>
           </p>
           {tasks.slice(0, 10).map((t: { title: string; status: string; revenue_score: number }, i: number) => (
-            <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50">
-              <span className="text-sm">{t.status === 'completed' ? '✅' : '⬜'}</span>
-              <p className="text-sm text-gray-800 flex-1">{t.title}</p>
-              <span className="text-[10px] text-gray-400">Score {t.revenue_score}</span>
+            <div key={i} className="flex items-center gap-3 py-3 border-b border-[#1a1a1a]">
+              <span className={`text-xs ${t.status === 'completed' ? 'text-[#22c55e]' : 'text-[#333]'}`}>
+                {t.status === 'completed' ? '✓' : '○'}
+              </span>
+              <p className={`text-sm flex-1 ${t.status === 'completed' ? 'text-[#525252] line-through' : 'text-white'}`}>{t.title}</p>
+              <span className="text-[10px] text-[#333] tabular-nums">{t.revenue_score}/10</span>
             </div>
           ))}
         </div>
       )}
 
       {ideas && ideas.length > 0 && (
-        <div className="px-4 pt-4">
-          <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
-            Idea Jail ({ideas.length} ideas)
+        <div className="px-4 pt-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">
+            Idea Jail <span className="tabular-nums">({ideas.length})</span>
           </p>
           {ideas.map((idea: { title: string; status: string; ai_alignment_score: number | null }, i: number) => (
-            <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50">
-              <p className="text-sm text-gray-600 flex-1">{idea.title}</p>
-              <span className="text-[10px] text-gray-400">{idea.ai_alignment_score ?? '–'}/10</span>
+            <div key={i} className="flex items-center gap-3 py-3 border-b border-[#1a1a1a]">
+              <p className="text-sm text-[#a1a1aa] flex-1">{idea.title}</p>
+              <span className="text-[10px] text-[#333] tabular-nums">{idea.ai_alignment_score ?? '–'}/10</span>
             </div>
           ))}
         </div>

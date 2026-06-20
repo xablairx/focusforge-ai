@@ -27,33 +27,33 @@ export default function ReviewPage() {
     setLoading(true)
     const res = await fetch('/api/review/generate', { method: 'POST' })
     if (res.ok) {
-      const json = await res.json()
-      setData(json)
+      setData(await res.json())
       setGenerated(true)
     }
     setLoading(false)
   }
 
   return (
-    <div>
-      <div className="bg-black px-4 pt-4 pb-5 border-b-4 border-[#f97316]">
-        <h1 className="text-2xl font-black text-white">Weekly Review 📊</h1>
-        <p className="text-gray-400 text-xs mt-1">Your Chief of Staff&apos;s honest assessment of this week.</p>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-4 pt-6 pb-5 border-b border-[#1a1a1a]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">Weekly Review</p>
+        <h1 className="text-2xl font-black text-white">Your week, assessed.</h1>
       </div>
 
       {!generated && (
-        <div className="px-4 pt-6 text-center">
-          <p className="text-gray-500 text-sm mb-4">Ready to see how this week went?</p>
+        <div className="px-4 pt-10 text-center">
+          <p className="text-[#525252] text-sm mb-6">Ready for an honest look at this week?</p>
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="bg-[#f97316] text-white font-black uppercase tracking-wide px-6 py-3 rounded-xl text-sm disabled:opacity-50"
+            className="bg-[#f97316] text-white font-black uppercase tracking-widest px-8 py-4 rounded-xl text-sm disabled:opacity-30"
           >
-            {loading ? 'Analyzing...' : "Generate This Week's Review →"}
+            {loading ? 'Analyzing...' : "Generate Review →"}
           </button>
-          <div className="mt-6">
-            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Past Reviews</p>
-            <Link href="/missions" className="text-[#f97316] text-sm font-bold">View Mission History →</Link>
+          <div className="mt-10">
+            <Link href="/missions" className="text-[#525252] text-sm hover:text-white transition-colors">
+              View mission history →
+            </Link>
           </div>
         </div>
       )}

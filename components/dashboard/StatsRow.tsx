@@ -6,19 +6,17 @@ interface Props {
 
 export default function StatsRow({ revenue, tasksCompleted, focusScore }: Props) {
   return (
-    <div className="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
-      <div className="py-3 px-4 text-center">
-        <p className="text-xl font-black text-green-600">${revenue.toFixed(0)}</p>
-        <p className="text-[9px] text-gray-400 uppercase tracking-wide mt-0.5">Revenue</p>
-      </div>
-      <div className="py-3 px-4 text-center">
-        <p className="text-xl font-black text-[#f97316]">{tasksCompleted}</p>
-        <p className="text-[9px] text-gray-400 uppercase tracking-wide mt-0.5">Tasks Done</p>
-      </div>
-      <div className="py-3 px-4 text-center">
-        <p className="text-xl font-black text-black">{focusScore}</p>
-        <p className="text-[9px] text-gray-400 uppercase tracking-wide mt-0.5">Focus Score</p>
-      </div>
+    <div className="grid grid-cols-3 border-b border-[#1a1a1a]">
+      {[
+        { value: `$${revenue.toFixed(0)}`, label: 'Revenue',     color: 'text-[#22c55e]' },
+        { value: String(tasksCompleted),    label: 'Done today',  color: 'text-[#f97316]' },
+        { value: String(focusScore),        label: 'Streak',      color: 'text-white'     },
+      ].map(({ value, label, color }, i) => (
+        <div key={i} className={`py-4 px-3 text-center ${i < 2 ? 'border-r border-[#1a1a1a]' : ''}`}>
+          <p className={`text-2xl font-black tabular-nums leading-none ${color}`}>{value}</p>
+          <p className="text-[9px] font-semibold uppercase tracking-widest text-[#525252] mt-1">{label}</p>
+        </div>
+      ))}
     </div>
   )
 }

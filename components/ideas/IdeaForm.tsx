@@ -28,24 +28,24 @@ export default function IdeaForm({ onAdd }: { onAdd: (idea: Idea) => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 border-b border-gray-100 px-4 py-3">
-      <input
-        type="text"
-        placeholder="Describe your idea..."
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm mb-2 focus:outline-none focus:border-[#f97316]"
-      />
-      {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
-      <div className="flex justify-end">
+    <form onSubmit={handleSubmit} className="px-4 py-4 border-b border-[#1a1a1a]">
+      <div className="flex gap-2">
+        <input
+          type="text"
+          placeholder="Describe your idea..."
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          className="flex-1 bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#f97316]"
+        />
         <button
           type="submit"
           disabled={!title.trim() || loading}
-          className="bg-black text-white font-black text-xs uppercase tracking-wide px-4 py-2 rounded-lg disabled:opacity-40"
+          className="bg-[#f97316] text-white font-black text-xs uppercase tracking-widest px-4 py-2.5 rounded-lg disabled:opacity-30 whitespace-nowrap"
         >
-          {loading ? 'Scoring...' : 'Lock It Up →'}
+          {loading ? '...' : 'Jail It'}
         </button>
       </div>
+      {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
     </form>
   )
 }

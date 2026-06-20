@@ -6,35 +6,43 @@ interface Props {
   onComplete: (id: string) => void
 }
 
-const priorityStyles = {
-  primary:   { wrapper: 'bg-black border-l-4 border-[#f97316]', title: 'text-white', badge: 'bg-[#f97316] text-white', label: 'bg-[#f97316] text-white' },
-  secondary: { wrapper: 'bg-gray-50 border border-gray-200',     title: 'text-black', badge: 'bg-amber-100 text-amber-800', label: 'bg-amber-100 text-amber-800' },
-  optional:  { wrapper: 'bg-gray-50 border border-dashed border-gray-200 opacity-70', title: 'text-gray-600', badge: 'bg-gray-100 text-gray-500', label: 'bg-gray-100 text-gray-500' },
-}
-
-const priorityLabels = { primary: 'Primary', secondary: 'Secondary', optional: 'Optional' }
-
 export default function TaskCard({ task, onComplete }: Props) {
-  const s = priorityStyles[task.priority]
+  const done = task.status === 'completed'
   return (
-    <div className={`rounded-xl p-3 mb-2 flex gap-3 items-start ${s.wrapper}`}>
+    <div className={`flex gap-3 items-start py-3.5 border-b border-[#1a1a1a] ${done ? 'opacity-40' : ''}`}>
       <button
-        onClick={() => onComplete(task.id)}
-        className={`w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center text-[10px] border-2 ${task.priority === 'primary' ? 'border-[#f97316] bg-[#f97316] text-white' : 'border-gray-300'}`}
+        onClick={() => !done && onComplete(task.id)}
+        className={`w-5 h-5 rounded-full flex-shrink-0 mt-0.5 border-2 flex items-center justify-center transition-all ${
+          done
+            ? 'border-[#f97316] bg-[#f97316]'
+            : task.priority === 'primary'
+            ? 'border-[#f97316]'
+            : 'border-[#333]'
+        }`}
       >
-        {task.status === 'completed' ? '✓' : ''}
+        {done && (
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )}
       </button>
-      <div className="flex-1">
-        <span className={`text-[9px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded mr-1 ${s.label}`}>
-          {priorityLabels[task.priority]}
-        </span>
-        <p className={`text-sm font-bold mt-1 ${s.title}`}>{task.title}</p>
-        <div className="flex items-center gap-2 mt-1">
-          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${s.badge}`}>
-            Score {task.revenue_score}
-          </span>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          {task.priority === 'primary' && (
+            <span className="text-[9px] font-black uppercase tracking-widest text-[#f97316]">Primary</span>
+          )}
+          {task.priority === 'secondary' && (
+            <span className="text-[9px] font-black uppercase tracking-widest text-[#525252]">Secondary</span>
+          )}
+          {task.priority === 'optional' && (
+            <span className="text-[9px] font-black uppercase tracking-widest text-[#333]">Optional</span>
+          )}
         </div>
+        <p className={`text-sm font-semibold leading-snug ${done ? 'line-through text-[#525252]' : 'text-white'}`}>
+          {task.title}
+        </p>
       </div>
+      <span className="text-[10px] tabular-nums text-[#333] flex-shrink-0 mt-0.5">{task.revenue_score}/10</span>
     </div>
   )
 }

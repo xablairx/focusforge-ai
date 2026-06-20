@@ -3,12 +3,16 @@
 @theme {
   --color-brand: #f97316;
   --color-brand-dark: #ea6c0a;
-  --color-brand-light: #fed7aa;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: #ffffff;
-  color: #111111;
+  background: #0a0a0a;
+  color: #fafafa;
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+input[type="range"] {
+  accent-color: #f97316;
 }

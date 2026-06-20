@@ -34,57 +34,53 @@ export default function RevenuePage() {
   }
 
   return (
-    <div>
-      <div className="bg-black px-4 pt-4 pb-5 border-b-4 border-green-500">
-        <h1 className="text-2xl font-black text-white">Revenue 💰</h1>
-        <div className="mt-2">
-          <p className="text-gray-400 text-xs uppercase tracking-widest">This Month</p>
-          <p className="text-4xl font-black text-green-400">${total.toFixed(2)}</p>
-        </div>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-4 pt-6 pb-5 border-b border-[#1a1a1a]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">This Month</p>
+        <p className="text-4xl font-black text-[#22c55e] tabular-nums leading-none">${total.toFixed(2)}</p>
+        <p className="text-[#525252] text-xs mt-1">revenue logged</p>
       </div>
 
-      <form onSubmit={handleAdd} className="px-4 pt-4 pb-2 border-b border-gray-100">
-        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Log Revenue</p>
-        <div className="flex gap-2 mb-2">
-          <input
-            type="number"
-            placeholder="Amount ($)"
-            value={amount}
-            onChange={e => setAmount(e.target.value)}
-            min="0.01"
-            step="0.01"
-            className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#f97316]"
-          />
-        </div>
+      <form onSubmit={handleAdd} className="px-4 py-5 border-b border-[#1a1a1a] space-y-3">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252]">Log Revenue</p>
+        <input
+          type="number"
+          placeholder="Amount ($)"
+          value={amount}
+          onChange={e => setAmount(e.target.value)}
+          min="0.01"
+          step="0.01"
+          className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#22c55e]"
+        />
         <input
           type="text"
           placeholder="What was this for? (optional)"
           value={description}
           onChange={e => setDescription(e.target.value)}
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm mb-2 focus:outline-none focus:border-[#f97316]"
+          className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#22c55e]"
         />
-        {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
+        {error && <p className="text-red-500 text-xs">{error}</p>}
         <button
           type="submit"
           disabled={!amount || loading}
-          className="w-full bg-green-600 text-white font-black uppercase tracking-wide py-2.5 rounded-xl text-sm disabled:opacity-40"
+          className="w-full bg-[#22c55e] text-white font-black uppercase tracking-widest py-3.5 rounded-xl text-sm disabled:opacity-30"
         >
-          {loading ? 'Logging...' : '+ Add Revenue'}
+          {loading ? 'Logging...' : '+ Log Revenue'}
         </button>
       </form>
 
-      <div className="px-4 pt-3">
-        <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">This Month&apos;s Entries</p>
+      <div className="px-4 pt-4">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-3">Entries</p>
         {entries.length === 0 ? (
-          <p className="text-gray-400 text-sm text-center py-6">No revenue logged yet. Every dollar starts here.</p>
+          <p className="text-[#525252] text-sm text-center py-8">No revenue logged yet.</p>
         ) : (
           entries.map(entry => (
-            <div key={entry.id} className="flex items-center justify-between py-3 border-b border-gray-50">
+            <div key={entry.id} className="flex items-center justify-between py-3.5 border-b border-[#1a1a1a]">
               <div>
-                <p className="text-sm font-bold text-gray-900">{entry.description || 'Revenue'}</p>
-                <p className="text-[10px] text-gray-400">{entry.entry_date}</p>
+                <p className="text-sm font-semibold text-white">{entry.description || 'Revenue'}</p>
+                <p className="text-[10px] text-[#525252] mt-0.5 tabular-nums">{entry.entry_date}</p>
               </div>
-              <p className="text-base font-black text-green-600">+${Number(entry.amount).toFixed(2)}</p>
+              <p className="text-base font-black text-[#22c55e] tabular-nums">+${Number(entry.amount).toFixed(2)}</p>
             </div>
           ))
         )}

@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 const TIME_OPTIONS = [
-  { label: '30 min',   value: 0.5 },
-  { label: '45 min',   value: 0.75 },
-  { label: '1 hr',     value: 1 },
-  { label: '2 hrs',    value: 2 },
-  { label: 'Full day', value: 8 },
+  { label: '30 min', value: 0.5 },
+  { label: '45 min', value: 0.75 },
+  { label: '1 hr',   value: 1 },
+  { label: '2 hrs',  value: 2 },
+  { label: 'All day', value: 8 },
 ]
 
 export default function CheckinPage() {
@@ -41,16 +41,16 @@ export default function CheckinPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="bg-black px-4 pt-4 pb-6 border-b-4 border-[#f97316]">
-        <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Good morning 👊</p>
-        <h1 className="text-2xl font-black text-white">Let&apos;s build your day</h1>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-4 pt-6 pb-5 border-b border-[#1a1a1a]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-1">Daily Check-in</p>
+        <h1 className="text-2xl font-black text-white">Build your day</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="px-4 pt-5 space-y-5">
+      <form onSubmit={handleSubmit} className="px-4 pt-5 space-y-6">
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-600 block mb-2">
-            How much time do you have today?
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-3">
+            Time available today
           </label>
           <div className="flex gap-2 flex-wrap">
             {TIME_OPTIONS.map(opt => (
@@ -58,10 +58,10 @@ export default function CheckinPage() {
                 key={opt.value}
                 type="button"
                 onClick={() => setAvailableHours(opt.value)}
-                className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${
+                className={`px-4 py-2 rounded-lg text-xs font-bold border transition-all ${
                   availableHours === opt.value
-                    ? 'bg-[#f97316] text-white border-[#f97316]'
-                    : 'bg-white text-gray-600 border-gray-200'
+                    ? 'bg-[#f97316] border-[#f97316] text-white'
+                    : 'bg-[#111] border-[#222] text-[#a1a1aa] hover:border-[#333]'
                 }`}
               >
                 {opt.label}
@@ -71,28 +71,28 @@ export default function CheckinPage() {
         </div>
 
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-600 block mb-2">
-            Any obstacles today?
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">
+            Obstacles today? <span className="normal-case text-[#333]">(optional)</span>
           </label>
           <textarea
             value={obstacles}
             onChange={e => setObstacles(e.target.value)}
-            placeholder="e.g. kids are home, feeling anxious, no laptop..."
+            placeholder="e.g. kids are home, no laptop, feeling anxious..."
             rows={2}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#f97316] resize-none"
+            className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#f97316] resize-none"
           />
         </div>
 
         <div>
-          <label className="text-[10px] font-black uppercase tracking-widest text-gray-600 block mb-2">
-            What did you accomplish yesterday?
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] block mb-2">
+            Yesterday's progress <span className="normal-case text-[#333]">(optional)</span>
           </label>
           <textarea
             value={yesterdayProgress}
             onChange={e => setYesterdayProgress(e.target.value)}
             placeholder="e.g. sent 2 DMs, wrote proposal, had a discovery call..."
             rows={2}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#f97316] resize-none"
+            className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#f97316] resize-none"
           />
         </div>
 
@@ -101,7 +101,7 @@ export default function CheckinPage() {
         <button
           type="submit"
           disabled={availableHours === null || loading}
-          className="w-full bg-[#f97316] text-white font-black uppercase tracking-wide py-3.5 rounded-xl text-sm disabled:opacity-40"
+          className="w-full bg-[#f97316] text-white font-black uppercase tracking-widest py-4 rounded-xl text-sm disabled:opacity-30 transition-opacity"
         >
           {loading ? 'Generating tasks...' : 'Generate My Tasks →'}
         </button>

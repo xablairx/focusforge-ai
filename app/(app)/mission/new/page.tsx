@@ -62,20 +62,24 @@ export default function NewMissionPage() {
   }
 
   if (state === 'checking') {
-    return <div className="min-h-screen bg-white flex items-center justify-center"><p className="text-gray-400 text-sm">Loading...</p></div>
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-[#222] border-t-[#f97316] rounded-full animate-spin" />
+      </div>
+    )
   }
 
   if (state === 'challenge') {
     return (
-      <div className="min-h-screen bg-white px-4 pt-8">
+      <div className="min-h-screen bg-[#0a0a0a] px-4 pt-8">
         <div className="max-w-sm mx-auto">
-          <div className="bg-black rounded-2xl p-5 mb-6">
-            <div className="text-[#f97316] text-xs font-black uppercase tracking-wide mb-3">⚡ Chief of Staff</div>
-            <p className="text-white text-sm leading-relaxed">
-              You&apos;ve been on this mission for {missionAge} day{missionAge !== 1 ? 's' : ''}. Before you switch, answer honestly: is this mission no longer valid — or has executing on it become uncomfortable?
+          <div className="border border-[#1e1e1e] bg-[#111] rounded-2xl p-5 mb-5">
+            <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#f97316] mb-3">Chief of Staff</p>
+            <p className="text-white text-sm leading-relaxed font-semibold">
+              You've been on this mission for {missionAge} day{missionAge !== 1 ? 's' : ''}. Before you switch — is this mission no longer valid, or has executing on it become uncomfortable?
             </p>
-            <p className="text-gray-400 text-sm leading-relaxed mt-3">
-              There&apos;s a difference between a dead end and resistance. One requires a pivot. The other requires you to push through.
+            <p className="text-[#525252] text-sm leading-relaxed mt-3">
+              There's a difference between a dead end and resistance. One requires a pivot. The other requires you to push through.
             </p>
           </div>
           <textarea
@@ -83,21 +87,21 @@ export default function NewMissionPage() {
             value={challengeResponse}
             onChange={e => setChallengeResponse(e.target.value)}
             rows={3}
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm mb-4 focus:outline-none focus:border-[#f97316] resize-none"
+            className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-xl px-4 py-3 text-sm mb-4 focus:outline-none focus:border-[#f97316] resize-none"
           />
           <div className="space-y-2">
             <button
               onClick={() => router.push('/')}
-              className="w-full bg-[#f97316] text-white font-black uppercase tracking-wide py-3 rounded-xl text-sm"
+              className="w-full bg-[#f97316] text-white font-black uppercase tracking-widest py-4 rounded-xl text-sm"
             >
-              You&apos;re right — I&apos;ll continue my mission
+              You're right — stay the course
             </button>
             <button
               onClick={handleAbandonAndSwitch}
               disabled={loading}
-              className="w-full bg-white border-2 border-gray-200 text-gray-500 font-bold py-3 rounded-xl text-sm disabled:opacity-50"
+              className="w-full border border-[#222] text-[#525252] font-semibold py-4 rounded-xl text-sm disabled:opacity-40 hover:text-white hover:border-[#333] transition-all"
             >
-              I want to switch anyway
+              Switch anyway
             </button>
           </div>
         </div>
@@ -106,22 +110,24 @@ export default function NewMissionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white px-4 pt-8">
+    <div className="min-h-screen bg-[#0a0a0a] px-4 pt-8">
       <div className="max-w-sm mx-auto">
-        <h1 className="text-2xl font-black mb-1">New mission</h1>
-        <p className="text-gray-400 text-sm mb-6">Make it specific. Make it revenue-related.</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#525252] mb-2">New Mission</p>
+        <h1 className="text-3xl font-black text-white mb-1">What are you<br />building?</h1>
+        <p className="text-[#525252] text-sm mb-8">Make it specific. Make it revenue-related.</p>
         <form onSubmit={handleCreateMission} className="space-y-4">
           <input
             type="text"
             placeholder="My mission is to..."
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#f97316]"
+            autoFocus
+            className="w-full bg-[#111] border border-[#222] text-white placeholder:text-[#333] rounded-lg px-4 py-3.5 text-sm focus:outline-none focus:border-[#f97316]"
           />
           <button
             type="submit"
             disabled={!title.trim() || loading}
-            className="w-full bg-black text-white font-black uppercase tracking-wide py-3 rounded-xl text-sm disabled:opacity-40"
+            className="w-full bg-[#f97316] text-white font-black uppercase tracking-widest py-4 rounded-xl text-sm disabled:opacity-30"
           >
             {loading ? 'Creating...' : 'Lock In Mission →'}
           </button>
