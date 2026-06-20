@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { anthropic } from '@/lib/anthropic/client'
 import { TaskOutputSchema } from '@/lib/anthropic/schemas'
 import { buildCheckinSystemPrompt, buildCheckinUserPrompt } from '@/lib/anthropic/prompts'
+import { extractJson } from '@/lib/anthropic/parse'
 
 export async function POST(request: Request) {
   const supabase = await createClient()
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
 
   let parsed
   try {
-    parsed = TaskOutputSchema.parse(JSON.parse(raw))
+    parsed = TaskOutputSchema.parse(JSON.parse(extractJson(raw)))
   } catch {
     return NextResponse.json({ error: 'AI returned invalid response' }, { status: 500 })
   }

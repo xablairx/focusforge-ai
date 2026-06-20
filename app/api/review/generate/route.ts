@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { anthropic } from '@/lib/anthropic/client'
 import { WeeklyReviewSchema } from '@/lib/anthropic/schemas'
+import { extractJson } from '@/lib/anthropic/parse'
 
 function getWeekBounds() {
   const now = new Date()
@@ -56,7 +57,7 @@ Return JSON: { "wins": ["..."], "failures": ["..."], "coaching": "direct 2-3 sen
 
   const raw = message.content[0].type === 'text' ? message.content[0].text : ''
   let parsed
-  try { parsed = WeeklyReviewSchema.parse(JSON.parse(raw)) }
+  try { parsed = WeeklyReviewSchema.parse(JSON.parse(extractJson(raw))) }
   catch { return NextResponse.json({ error: 'AI returned invalid response' }, { status: 500 }) }
 
   const { data, error } = await supabase

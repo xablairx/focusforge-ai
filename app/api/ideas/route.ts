@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { anthropic } from '@/lib/anthropic/client'
 import { IdeaScoreSchema } from '@/lib/anthropic/schemas'
+import { extractJson } from '@/lib/anthropic/parse'
 
 export async function POST(request: Request) {
   const supabase = await createClient()
@@ -41,7 +42,7 @@ Score guide: 0-4=jailed, 5-7=flagged, 8-10=approved`,
   const raw = message.content[0].type === 'text' ? message.content[0].text : ''
   let scored
   try {
-    scored = IdeaScoreSchema.parse(JSON.parse(raw))
+    scored = IdeaScoreSchema.parse(JSON.parse(extractJson(raw)))
   } catch {
     return NextResponse.json({ error: 'AI returned invalid response' }, { status: 500 })
   }
